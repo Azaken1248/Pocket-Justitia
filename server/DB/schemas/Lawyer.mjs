@@ -1,3 +1,5 @@
+import mongoose from 'mongoose';
+
 const lawyerSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     specialization: { type: String },

@@ -1,3 +1,5 @@
+import mongoose from 'mongoose';
+
 const courtProgressSchema = new mongoose.Schema({
     caseId: { type: mongoose.Schema.Types.ObjectId, ref: 'Case', required: true },
     status: { type: String, enum: ['Filed', 'In Hearing', 'Evidence Submission', 'Judgement'] },

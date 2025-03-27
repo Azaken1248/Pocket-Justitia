@@ -1,3 +1,5 @@
+import mongoose from 'mongoose';
+
 const judgeSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     courtName: { type: String },
