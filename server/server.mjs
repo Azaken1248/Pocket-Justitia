@@ -1,10 +1,22 @@
 import express from 'express';
 import connectDB from './DB/Connection.mjs';
+import cors from 'cors';
+
+import authRouter from './routers/authRouter.mjs';
+import userRouter from './routers/userRouter.mjs';
+import lawyerRouter from './routers/lawyerRouter.mjs';
+import judgeRouter from './routers/judgeRouter.mjs';
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 connectDB();
+
+app.use('/auth', authRouter);
+app.use('/user', userRouter);
+app.use('/lawyer', lawyerRouter);
+app.use('/judge', judgeRouter);
 
 app.get('/', (_req, res) => {
   res.send('Justicia API is running...');
