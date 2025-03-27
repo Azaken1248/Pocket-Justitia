@@ -11,12 +11,13 @@ const Register = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         setUsertype(userType);
-        register();
+        register(); // Call the register function
+        navigate("/user"); // Redirect to /login after registration
     };
 
     return (
         <div className="register-container">
-            <h2 className = "auth-heading">Register</h2>
+            <h2 className="auth-heading">Register</h2>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label>User Type</label>

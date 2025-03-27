@@ -18,8 +18,8 @@ function App() {
                     <Route path="" element = {<Landing></Landing>}/>
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
-                    <Route path="/user/id" element={<UserPage />} />
-                    <Route path="/user/uid/case/caseId" element={<CaseDetails />} />
+                    <Route path="/user" element={<UserPage />} />
+                    <Route path="/user/case" element={<CaseDetails />} />
                 </Routes>
                 <Footer></Footer>
           </GeneralProvider>

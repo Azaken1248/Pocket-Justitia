@@ -11,12 +11,13 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         setUsertype(userType);
-        login();
+        login();  // Call the login function (you can add error handling if needed)
+        navigate("/user");  // Redirect to /user after login
     };
 
     return (
         <div className="login-container">
-            <h2 className = "auth-heading">Login</h2>
+            <h2 className="auth-heading">Login</h2>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label>User Type</label>
@@ -55,7 +56,7 @@ const Login = () => {
                 </div>
 
                 <div className="btn-container">
-                    <button type="submit" className="btn btn-primary" >Login</button>
+                    <button type="submit" className="btn btn-primary">Login</button>
                 </div>
 
                 <div className="signup-link">
