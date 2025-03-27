@@ -29,6 +29,7 @@ const Login = () => {
         const data = { username, passwordHash: password };
         const result = await fetchData('/auth/login', 'POST', data);
         if (result && result.token) {
+            localStorage.setItem("token", result.token)
             alert('Login Successful!');
             navigate('/dashboard');
         } else {
