@@ -12,7 +12,15 @@ const Login = () => {
         e.preventDefault();
         setUsertype(userType);
         login();  // Call the login function (you can add error handling if needed)
-        navigate("/user");  // Redirect to /user after login
+        
+        // Conditional Navigation Based on User Type
+        if (userType === "normal") {
+            navigate("/user");  // Redirect to User Homepage
+        } else if (userType === "lawyer") {
+            navigate("/lawyer");  // Redirect to Lawyer Homepage
+        } else if (userType === "judge") {
+            navigate("/judge");  // Redirect to Judge Homepage (if needed)
+        }
     };
 
     return (

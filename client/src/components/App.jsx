@@ -3,6 +3,7 @@ import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import CaseDetails from "../pages/CaseDetails";
 import Login from "../pages/Login";
+import LawyerPage from "../pages/LawyerPage";
 import Landing from '../pages/Landing';
 import Register from "../pages/Register";
 import UserPage from "../pages/UserPage";
@@ -20,6 +21,7 @@ function App() {
                     <Route path="/register" element={<Register />} />
                     <Route path="/user" element={<UserPage />} />
                     <Route path="/user/case" element={<CaseDetails />} />
+                    <Route path="/lawyer" element={<LawyerPage></LawyerPage>}/>
                 </Routes>
                 <Footer></Footer>
           </GeneralProvider>
