@@ -1,44 +1,140 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { GeneralContext } from "../context/GeneralContext";
 import "../styles/UserPage.css";
 
 const UserPage = () => {
+    const { caseDetails, addCase, setCaseDetails } = useContext(GeneralContext);
     const [nextCourtDate, setNextCourtDate] = useState("2025-04-15"); // Dummy next court date
 
-    // Dummy Data for Current and Past Cases
-    const currentCases = [
-        { id: 1, title: "Property Dispute", status: "In Hearing" },
-        { id: 2, title: "Divorce Settlement", status: "Evidence Submission" }
-    ];
+    const [newCase, setNewCase] = useState({
+        caseNumber: "",
+        title: "",
+        description: "",
+        status: "Ongoing",
+        filedDate: "",
+        lastUpdated: new Date().toISOString().split('T')[0],
+        normalUserId: "12345",
+        againstUserId: "54321",
+        lawyerId: "67890",
+        judgeId: "98765",
+        progressTimeline: []
+    });
 
-    const pastCases = [
-        { id: 3, title: "Theft Case", status: "Closed" },
-        { id: 4, title: "Breach of Contract", status: "Closed" }
-    ];
-
-    // Handle case submission
-    const handleAddCase = (e) => {
-        e.preventDefault();
-        alert("Case added successfully!");
+    // Handle Form Change
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setNewCase({ ...newCase, [name]: value });
     };
+
+    // Handle Form Submit
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (newCase.caseNumber && newCase.title && newCase.description) {
+            addCase({ ...newCase });
+            alert("Case added successfully!");
+            setNewCase({ // Reset form
+                caseNumber: "",
+                title: "",
+                description: "",
+                status: "Ongoing",
+                filedDate: "",
+                lastUpdated: new Date().toISOString().split('T')[0],
+                normalUserId: "12345",
+                againstUserId: "54321",
+                lawyerId: "67890",
+                judgeId: "98765",
+                progressTimeline: []
+            });
+        } else {
+            alert("Please fill in all fields!");
+        }
+    };
+
+    // Move Case to Past Cases
+    const handleMoveToPast = (caseNumber) => {
+        if (window.confirm("Are you sure you want to mark this case as closed?")) {
+            setCaseDetails(prevDetails => {
+                // Split current and past cases
+                const updatedCases = prevDetails.map(caseItem => {
+                    if (caseItem.caseNumber === caseNumber) {
+                        return { ...caseItem, status: "Closed", lastUpdated: new Date().toISOString().split('T')[0] };
+                    }
+                    return caseItem;
+                });
+                return updatedCases;
+            });
+        }
+    };
+
+    // Move Case to Current Cases
+    const handleReopenCase = (caseNumber) => {
+        if (window.confirm("Are you sure you want to reopen this case?")) {
+            setCaseDetails(prevDetails => {
+                const updatedCases = prevDetails.map(caseItem => {
+                    if (caseItem.caseNumber === caseNumber) {
+                        return { ...caseItem, status: "Ongoing", lastUpdated: new Date().toISOString().split('T')[0] };
+                    }
+                    return caseItem;
+                });
+                return updatedCases;
+            });
+        }
+    };
+
+    // Filter Cases
+    const currentCases = caseDetails.filter(caseItem => caseItem.status !== "Closed");
+    const pastCases = caseDetails.filter(caseItem => caseItem.status === "Closed");
 
     return (
         <div className="user-page-container">
             <h2 className="page-title">User Dashboard</h2>
 
             <div className="card-container">
-                {/* Add Cases Card */}
+                {/* Add Case Card */}
                 <div className="card">
                     <h3>Add Case</h3>
-                    <form onSubmit={handleAddCase}>
-                        <input type="text" placeholder="Case Title" required />
-                        <textarea placeholder="Case Description" required></textarea>
-                        <input type="date" placeholder="Filed Date" required />
-                        <select required>
-                            <option value="" disabled selected>Select Status</option>
-                            <option value="Filed">Filed</option>
+                    <form onSubmit={handleSubmit}>
+                        <input 
+                            type="text" 
+                            name="caseNumber" 
+                            placeholder="Case Number" 
+                            value={newCase.caseNumber} 
+                            onChange={handleChange} 
+                            required 
+                        />
+                        <input 
+                            type="text" 
+                            name="title" 
+                            placeholder="Case Title" 
+                            value={newCase.title} 
+                            onChange={handleChange} 
+                            required 
+                        />
+                        <textarea 
+                            name="description" 
+                            placeholder="Case Description" 
+                            value={newCase.description} 
+                            onChange={handleChange} 
+                            required 
+                        />
+                        <input 
+                            type="date" 
+                            name="filedDate" 
+                            value={newCase.filedDate} 
+                            onChange={handleChange} 
+                            required 
+                        />
+                        <select 
+                            name="status" 
+                            value={newCase.status} 
+                            onChange={handleChange}
+                            required
+                        >
+                            <option value="Ongoing">Ongoing</option>
                             <option value="In Hearing">In Hearing</option>
                             <option value="Evidence Submission">Evidence Submission</option>
                             <option value="Judgement">Judgement</option>
+                            <option value="Closed">Closed</option>
                         </select>
                         <button type="submit">Submit</button>
                     </form>
@@ -50,8 +146,14 @@ const UserPage = () => {
                     {currentCases.length > 0 ? (
                         <ul>
                             {currentCases.map((caseItem) => (
-                                <li key={caseItem.id}>
+                                <li key={caseItem.caseNumber}>
                                     <strong>{caseItem.title}</strong> - {caseItem.status}
+                                    <button 
+                                        className="move-button" 
+                                        onClick={() => handleMoveToPast(caseItem.caseNumber)}
+                                    >
+                                        Mark as Closed
+                                    </button>
                                 </li>
                             ))}
                         </ul>
@@ -64,8 +166,14 @@ const UserPage = () => {
                     {pastCases.length > 0 ? (
                         <ul>
                             {pastCases.map((caseItem) => (
-                                <li key={caseItem.id}>
+                                <li key={caseItem.caseNumber}>
                                     <strong>{caseItem.title}</strong> - {caseItem.status}
+                                    <button 
+                                        className="move-button" 
+                                        onClick={() => handleReopenCase(caseItem.caseNumber)}
+                                    >
+                                        Reopen Case
+                                    </button>
                                 </li>
                             ))}
                         </ul>

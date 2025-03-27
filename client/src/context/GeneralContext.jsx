@@ -65,13 +65,36 @@ export const GeneralProvider = ({ children }) => {
 
     // Add New Case
     const addCase = (newCase) => {
-        setCaseDetails([...caseDetails, newCase]);
+        setCaseDetails(prevCases => [...prevCases, newCase]);
+        console.log("Case added:", newCase);
     };
 
     // Remove Case by ID (Optional)
     const removeCase = (caseId) => {
-        setCaseDetails(caseDetails.filter(caseItem => caseItem.caseNumber !== caseId));
+        setCaseDetails(prevCases => prevCases.filter(caseItem => caseItem.caseNumber !== caseId));
+        console.log("Case removed:", caseId);
     };
+
+    // ✅ **Move Case to Past List**
+    const moveCaseToPast = (caseId) => {
+        setCaseDetails(prevCases => {
+            return prevCases.map(caseItem => {
+                if (caseItem.caseNumber === caseId) {
+                    console.log(`Moving case ${caseId} to past`);
+                    return { 
+                        ...caseItem, 
+                        status: "Closed", 
+                        lastUpdated: new Date().toISOString().split('T')[0] 
+                    };
+                }
+                return caseItem;
+            });
+        });
+    };
+
+    // Separate Current and Past Cases
+    const currentCases = caseDetails.filter(caseItem => caseItem.status !== "Closed");
+    const pastCases = caseDetails.filter(caseItem => caseItem.status === "Closed");
 
     // Login Function
     const login = async () => {
@@ -79,17 +102,14 @@ export const GeneralProvider = ({ children }) => {
             const response = await axios.post("/api/login", { email, password });
             const { token, userType, userName } = response.data;
 
-            // Store in Local Storage
             localStorage.setItem("token", token);
             localStorage.setItem("userType", userType);
             localStorage.setItem("username", userName);
 
-            // Update States
             setUsertype(userType);
             setUsername(userName);
             setError("");
 
-            // Navigate to Dashboard
             if (userType === "lawyer") navigate("/lawyer-dashboard");
             else if (userType === "judge") navigate("/judge-dashboard");
             else navigate("/home");
@@ -139,9 +159,12 @@ export const GeneralProvider = ({ children }) => {
 
             // Case Management
             caseDetails,
+            currentCases,
+            pastCases,
             getCaseById,
             addCase,
-            removeCase
+            removeCase,
+            moveCaseToPast
         }}>
             {children}
         </GeneralContext.Provider>

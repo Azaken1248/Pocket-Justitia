@@ -1,18 +1,15 @@
-/* General Styles */
+/* General Container */
 .user-page-container {
     padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
 }
 
 /* Page Title */
 .page-title {
     text-align: center;
+    font-size: 2rem;
     margin-bottom: 20px;
-    font-family: Arial, sans-serif;
     color: #333;
 }
 
@@ -21,72 +18,116 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
-    margin-top: 20px;
+    padding: 10px;
 }
 
-/* Card Styles */
+/* Card Styling */
 .card {
     background-color: #ffffff;
-    padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    overflow: hidden;
+}
+
+/* Form Styles */
+form {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    gap: 15px;
 }
 
-/* Card Form Inputs */
-.card form input,
-.card form textarea,
-.card form select {
-    width: 100%;
+/* Form Input and Textarea */
+input[type="text"],
+input[type="date"],
+textarea,
+select {
     padding: 10px;
-    margin: 10px 0;
-    border: 2px solid #ddd;
-    border-radius: 5px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-top: 5px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s;
 }
 
-/* Submit Button */
-.card form button,
-.card button {
+/* Input Focus State */
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: #007bff;
+    background-color: #fff;
+}
+
+/* Button Styling */
+button[type="submit"] {
+    padding: 10px;
     background-color: #007bff;
     color: white;
+    font-size: 1rem;
+    font-weight: bold;
     border: none;
-    padding: 10px;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s;
 }
 
-.card form button:hover,
-.card button:hover {
+button[type="submit"]:hover {
     background-color: #0056b3;
 }
 
-/* Lists */
-.card ul {
-    list-style-type: none;
+/* List Styling */
+ul {
+    list-style: none;
     padding: 0;
 }
 
-.card ul li {
-    margin: 10px 0;
+li {
     padding: 10px;
-    background-color: #f0f0f0;
-    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Move Button */
+.move-button {
+    padding: 5px 10px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.move-button:hover {
+    background-color: #cc0000;
+}
+
+/* Contact Lawyer Button */
+button {
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background-color: #28a745;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #218838;
 }
 
 /* Next Court Date */
 .next-court-date {
     margin-top: 20px;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     text-align: center;
-}
-
-.next-court-date h4 {
-    margin-bottom: 10px;
-    color: #007bff;
+    font-size: 1.2rem;
+    color: #555;
 }
