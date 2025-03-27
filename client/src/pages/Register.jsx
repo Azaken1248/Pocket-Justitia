@@ -1,22 +1,74 @@
-import React, { useContext, useState } from "react";
-import { GeneralContext } from "../context/GeneralContext";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Register.css";
 
+const apiUrl = 'http://localhost:3000';
+
 const Register = () => {
-    const { register, setUsertype, setUsername, setEmail, setPassword } = useContext(GeneralContext);
     const [userType, setLocalUserType] = useState("normal");
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("");
+    const [specialization, setSpecialization] = useState("");
+    const [experienceYears, setExperienceYears] = useState("");
+    const [licenseNumber, setLicenseNumber] = useState("");
+    const [courtName, setCourtName] = useState("");
+    const [judgeExperience, setJudgeExperience] = useState("");
     const navigate = useNavigate();
+
+    const fetchData = async (endpoint, method, data) => {
+        try {
+            const response = await fetch(`${apiUrl}${endpoint}`, {
+                method,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+            });
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            console.error('Error:', error);
+            return null;
+        }
+    };
+
+    const signup = async () => {
+        const data = {
+            username,
+            passwordHash: password,
+            email,
+            userType
+        };
+
+        if (userType === 'lawyer') {
+            data.lawyerInfo = {
+                specialization,
+                experienceYears: parseInt(experienceYears),
+                licenseNumber
+            };
+        } else if (userType === 'judge') {
+            data.judgeInfo = {
+                courtName,
+                yearsOfExperience: parseInt(judgeExperience)
+            };
+        }
+
+        const result = await fetchData('/auth/signup', 'POST', data);
+        if (result) {
+            alert('Signup Successful!');
+            navigate('/login');
+        } else {
+            alert('Signup Failed: ' + (result?.message || 'Unknown error'));
+        }
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setUsertype(userType);
-        register();
+        signup();
     };
 
     return (
         <div className="register-container">
-            <h2 className = "auth-heading">Register</h2>
+            <h2 className="auth-heading">Register</h2>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label>User Type</label>
@@ -64,6 +116,61 @@ const Register = () => {
                         required
                     />
                 </div>
+
+                {userType === 'lawyer' && (
+                    <>
+                        <div className="form-group">
+                            <label>Specialization</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Enter your specialization"
+                                onChange={(e) => setSpecialization(e.target.value)}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Years of Experience</label>
+                            <input
+                                type="number"
+                                className="form-control"
+                                placeholder="Enter your years of experience"
+                                onChange={(e) => setExperienceYears(e.target.value)}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>License Number</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Enter your license number"
+                                onChange={(e) => setLicenseNumber(e.target.value)}
+                            />
+                        </div>
+                    </>
+                )}
+
+                {userType === 'judge' && (
+                    <>
+                        <div className="form-group">
+                            <label>Court Name</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Enter court name"
+                                onChange={(e) => setCourtName(e.target.value)}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Years of Experience</label>
+                            <input
+                                type="number"
+                                className="form-control"
+                                placeholder="Enter years of experience"
+                                onChange={(e) => setJudgeExperience(e.target.value)}
+                            />
+                        </div>
+                    </>
+                )}
 
                 <div className="btn-container">
                     <button type="submit" className="btn btn-primary">Register</button>
