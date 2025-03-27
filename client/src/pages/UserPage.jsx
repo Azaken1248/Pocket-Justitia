@@ -20,6 +20,36 @@ const UserPage = () => {
         progressTimeline: []
     });
 
+    // Dummy Data for Past Cases
+    const dummyPastCases = [
+        {
+            caseNumber: "C123",
+            title: "Kamath Theft Case",
+            description: "Allegations of Theft.",
+            status: "Closed",
+            filedDate: "2024-02-15",
+            lastUpdated: "2024-08-20",
+            normalUserId: "12345",
+            againstUserId: "54321",
+            lawyerId: "67890",
+            judgeId: "98765",
+            progressTimeline: ["Filed", "In Hearing", "Judgment", "Closed"]
+        },
+        {
+            caseNumber: "C124",
+            title: "Velachery Contract Breach",
+            description: "Breach of business contract.",
+            status: "Closed",
+            filedDate: "2023-10-05",
+            lastUpdated: "2024-01-12",
+            normalUserId: "12345",
+            againstUserId: "54321",
+            lawyerId: "67890",
+            judgeId: "98765",
+            progressTimeline: ["Filed", "Mediation", "Closed"]
+        }
+    ];
+
     // Handle Form Change
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -50,40 +80,9 @@ const UserPage = () => {
         }
     };
 
-    // Move Case to Past Cases
-    const handleMoveToPast = (caseNumber) => {
-        if (window.confirm("Are you sure you want to mark this case as closed?")) {
-            setCaseDetails(prevDetails => {
-                // Split current and past cases
-                const updatedCases = prevDetails.map(caseItem => {
-                    if (caseItem.caseNumber === caseNumber) {
-                        return { ...caseItem, status: "Closed", lastUpdated: new Date().toISOString().split('T')[0] };
-                    }
-                    return caseItem;
-                });
-                return updatedCases;
-            });
-        }
-    };
-
-    // Move Case to Current Cases
-    const handleReopenCase = (caseNumber) => {
-        if (window.confirm("Are you sure you want to reopen this case?")) {
-            setCaseDetails(prevDetails => {
-                const updatedCases = prevDetails.map(caseItem => {
-                    if (caseItem.caseNumber === caseNumber) {
-                        return { ...caseItem, status: "Ongoing", lastUpdated: new Date().toISOString().split('T')[0] };
-                    }
-                    return caseItem;
-                });
-                return updatedCases;
-            });
-        }
-    };
-
     // Filter Cases
     const currentCases = caseDetails.filter(caseItem => caseItem.status !== "Closed");
-    const pastCases = caseDetails.filter(caseItem => caseItem.status === "Closed");
+    const pastCases = [...caseDetails.filter(caseItem => caseItem.status === "Closed"), ...dummyPastCases];
 
     return (
         <div className="user-page-container">
@@ -91,7 +90,7 @@ const UserPage = () => {
 
             <div className="card-container">
                 {/* Add Case Card */}
-                <div className="card">
+                <div className="card add-case-card">
                     <h3>Add Case</h3>
                     <form onSubmit={handleSubmit}>
                         <input 
@@ -133,7 +132,7 @@ const UserPage = () => {
                             <option value="Ongoing">Ongoing</option>
                             <option value="In Hearing">In Hearing</option>
                             <option value="Evidence Submission">Evidence Submission</option>
-                            <option value="Judgement">Judgement</option>
+                            <option value="Judgment">Judgment</option>
                             <option value="Closed">Closed</option>
                         </select>
                         <button type="submit">Submit</button>
@@ -148,12 +147,6 @@ const UserPage = () => {
                             {currentCases.map((caseItem) => (
                                 <li key={caseItem.caseNumber}>
                                     <strong>{caseItem.title}</strong> - {caseItem.status}
-                                    <button 
-                                        className="move-button" 
-                                        onClick={() => handleMoveToPast(caseItem.caseNumber)}
-                                    >
-                                        Mark as Closed
-                                    </button>
                                 </li>
                             ))}
                         </ul>
@@ -167,13 +160,9 @@ const UserPage = () => {
                         <ul>
                             {pastCases.map((caseItem) => (
                                 <li key={caseItem.caseNumber}>
-                                    <strong>{caseItem.title}</strong> - {caseItem.status}
-                                    <button 
-                                        className="move-button" 
-                                        onClick={() => handleReopenCase(caseItem.caseNumber)}
-                                    >
-                                        Reopen Case
-                                    </button>
+                                    <div>
+                                        <strong>{caseItem.title}</strong> - {caseItem.status} (Last Updated: {caseItem.lastUpdated})
+                                    </div>
                                 </li>
                             ))}
                         </ul>
