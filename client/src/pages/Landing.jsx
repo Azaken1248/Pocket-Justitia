@@ -37,7 +37,6 @@ const recentFamousCases = [
   }
 ];
 
-// Word weight system
 const wordWeights = {
   "ban": 9.0,
   "spyware": 8.5,
