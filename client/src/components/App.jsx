@@ -13,7 +13,7 @@ import { GeneralProvider } from "../context/GeneralContext";
 function App() {
     return (
         <div>
-          <BrowserRouter>
+          <BrowserRouter basename="/Pocket-Justitia">
           <GeneralProvider>
                 <Navbar></Navbar>
                 <Routes>
