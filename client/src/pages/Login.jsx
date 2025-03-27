@@ -29,9 +29,16 @@ const Login = () => {
         const data = { username, passwordHash: password };
         const result = await fetchData('/auth/login', 'POST', data);
         if (result && result.token) {
-            localStorage.setItem("token", result.token)
+
             alert('Login Successful!');
-            navigate('/dashboard');
+            if(result.user.userType === "normal"){
+                navigate('/user');
+            }else if(result.user.userType === "lawyer"){
+                navigate('/lawyer');
+            }else{
+                navigate('/judge');
+            }
+            
         } else {
             alert('Login Failed: ' + (result?.message || 'Unknown error'));
         }
