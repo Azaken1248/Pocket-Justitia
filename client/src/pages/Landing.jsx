@@ -117,9 +117,9 @@ const Landing = () => {
             <li key={index} className="case-item" onClick={() => fetchSummary(caseItem.description)}>
               <div className="case-header">
                 <h4>{caseItem.title}</h4>
-                <span className="priority-score">Priority: {calculatePriority(caseItem.title)}</span>
               </div>
               <p>{caseItem.description}</p>
+              <span className="priority-score">Priority: {calculatePriority(caseItem.title)}</span>
             </li>
           ))}
         </ul>
