@@ -1,26 +1,45 @@
-import React, { useContext, useState } from "react";
-import { GeneralContext } from "../context/GeneralContext";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Login.css";
 
+const apiUrl = 'http://localhost:3000';
+
 const Login = () => {
-    const { login, setUsertype, setUsername, setPassword } = useContext(GeneralContext);
     const [userType, setLocalUserType] = useState("normal");
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
     const navigate = useNavigate();
+
+    const fetchData = async (endpoint, method, data) => {
+        try {
+            const response = await fetch(`${apiUrl}${endpoint}`, {
+                method,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+            });
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            console.error('Error:', error);
+            return null;
+        }
+    };
+
+    const login = async () => {
+        const data = { username, passwordHash: password };
+        const result = await fetchData('/auth/login', 'POST', data);
+        if (result && result.token) {
+            localStorage.setItem("token", result.token)
+            alert('Login Successful!');
+            navigate('/dashboard');
+        } else {
+            alert('Login Failed: ' + (result?.message || 'Unknown error'));
+        }
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setUsertype(userType);
-        login();  // Call the login function (you can add error handling if needed)
-        
-        // Conditional Navigation Based on User Type
-        if (userType === "normal") {
-            navigate("/user");  // Redirect to User Homepage
-        } else if (userType === "lawyer") {
-            navigate("/lawyer");  // Redirect to Lawyer Homepage
-        } else if (userType === "judge") {
-            navigate("/judge");  // Redirect to Judge Homepage (if needed)
-        }
+        login();
     };
 
     return (

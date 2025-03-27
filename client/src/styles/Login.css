@@ -8,51 +8,69 @@
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     margin-top: 10vh;
-    /* display: flex;
-    flex-direction: column;
-    align-items: center; */
-}
-
-/* Form Fields */
-.form-group {
+  }
+  
+  /* Mobile: Adjust Padding for Small Screens */
+  @media (max-width: 480px) {
+    .login-container {
+      padding: 15px;
+      margin-top: 5vh;
+    }
+  }
+  
+  /* Form Fields */
+  .form-group {
     margin-bottom: 15px;
     display: flex;
     flex-direction: column;
     width: 100%;
-}
-
-    
-/* Center the form heading */
-.auth-heading {
+  }
+  
+  /* Center the Form Heading */
+  .auth-heading {
     text-align: center;
     font-size: 2rem;
     font-weight: bold;
     margin-bottom: 20px;
-}
-
-
-.form-group label {
+  }
+  
+  /* Mobile: Reduce Heading Size */
+  @media (max-width: 480px) {
+    .auth-heading {
+      font-size: 1.6rem;
+    }
+  }
+  
+  .form-group label {
     margin-bottom: 5px;
     font-weight: bold;
     color: #333;
-}
-
-.form-control {
+  }
+  
+  .form-control {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 1rem;
-}
-
-/* Centered Button Container */
-.btn-container {
+  }
+  
+  /* Mobile: Adjust Input Field for Small Screens */
+  @media (max-width: 480px) {
+    .form-control {
+      padding: 8px;
+      font-size: 0.9rem;
+    }
+  }
+  
+  /* Centered Button Container */
+  .btn-container {
     display: flex;
     justify-content: center;
     width: 100%;
-}
-
-/* Button */
-.btn-primary {
+  }
+  
+  /* Button */
+  .btn-primary {
     padding: 10px 20px;
     background-color: #007bff;
     color: white;
@@ -61,30 +79,45 @@
     cursor: pointer;
     transition: background 0.3s;
     margin-top: 10px;
-}
-
-.btn-primary:hover {
+  }
+  
+  /* Mobile: Adjust Button Padding */
+  @media (max-width: 480px) {
+    .btn-primary {
+      padding: 8px 16px;
+    }
+  }
+  
+  .btn-primary:hover {
     background-color: #0056b3;
-}
-
-/* Signup Link */
-.signup-link {
+  }
+  
+  /* Signup Link */
+  .signup-link {
     margin-top: 10px;
     text-align: center;
     font-size: 0.9rem;
     color: #555;
-}
-
-/* Hyperlink Style */
-.hyperlink {
+  }
+  
+  /* Hyperlink Style */
+  .hyperlink {
     color: #007bff;
     cursor: pointer;
     text-decoration: none;
     font-weight: bold;
     transition: color 0.3s;
-}
-
-.hyperlink:hover {
+  }
+  
+  .hyperlink:hover {
     color: #0056b3;
     text-decoration: underline;
-}
+  }
+  
+  /* Mobile: Adjust Signup Link for Smaller Screens */
+  @media (max-width: 480px) {
+    .signup-link {
+      font-size: 0.8rem;
+    }
+  }
+  

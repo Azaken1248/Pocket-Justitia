@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
 import '../styles/Landing.css';
-import logo from '../assets/logo.jpg'; // Import logo
+import logo from '../assets/logo.jpg';
 
 const lawyerQuotes = {
   inspirational: [
@@ -17,7 +18,6 @@ const lawyerQuotes = {
   ]
 };
 
-// Recent Landmark Cases
 const recentFamousCases = [
   {
     title: "Central Vista Project Case (2021)",
@@ -37,7 +37,32 @@ const recentFamousCases = [
   }
 ];
 
-// Function to get random quote
+const wordWeights = {
+  "ban": 9.0,
+  "spyware": 8.5,
+  "marriage": 8.0,
+  "court": 7.5,
+  "constitution": 7.0,
+  "government": 6.5,
+  "law": 6.0,
+  "rights": 5.5,
+  "appeal": 5.0,
+  "reform": 4.5,
+  "policy": 4.0
+};
+
+const calculatePriority = (title) => {
+  if (!title) return 0.0;
+
+  const words = title.toLowerCase().split(/\s+/);
+  const totalWeight = words.reduce((sum, word) => sum + (wordWeights[word] || 1.0), 0);
+
+
+  const normalizedScore = Math.log1p(totalWeight) * 2; 
+
+  return Math.min(Math.max(normalizedScore.toFixed(2), 0), 10); 
+};
+
 const getRandomQuote = () => {
   const categories = Object.keys(lawyerQuotes);
   const randomCategory = categories[Math.floor(Math.random() * categories.length)];
@@ -47,10 +72,29 @@ const getRandomQuote = () => {
 
 const Landing = () => {
   const [quote, setQuote] = useState("");
+  const [summary, setSummary] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setQuote(getRandomQuote());
   }, []);
+
+  const fetchSummary = async (caseDescription) => {
+    setLoading(true);
+    try {
+      const response = await fetch('http://localhost:3000/gemini/generate-summary', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ caseDescription })
+      });
+      const data = await response.json();
+      setSummary(data.summary);
+    } catch (error) {
+      console.error('Error fetching summary:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="landing-container">
@@ -70,13 +114,33 @@ const Landing = () => {
         <h2>Current Famous Cases</h2>
         <ul className="cases-list">
           {recentFamousCases.map((caseItem, index) => (
-            <li key={index} className="case-item">
-              <h4>{caseItem.title}</h4>
+            <li key={index} className="case-item" onClick={() => fetchSummary(caseItem.description)}>
+              <div className="case-header">
+                <h4>{caseItem.title}</h4>
+                <span className="priority-score">Priority: {calculatePriority(caseItem.title)}</span>
+              </div>
               <p>{caseItem.description}</p>
             </li>
           ))}
         </ul>
       </div>
+
+      {loading && (
+        <div className="loading-overlay">
+          <div className="spinner"></div>
+          <p>⏳ Generating summary, please wait...</p>
+        </div>
+      )}
+
+      {summary && (
+        <div className="summary-overlay">
+          <div className="summary-content">
+            <h3>Case Summary</h3>
+            <ReactMarkdown>{summary}</ReactMarkdown>
+            <button className="close-button" onClick={() => setSummary(null)}>×</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
