@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import logo from '../assets/logo.jpg';
 import { GeneralContext } from '../context/GeneralContext';
 import '../styles/Navbar.css';
 

@@ -1,27 +1,27 @@
 /* Navbar Container */
 .navbar {
     height: 10vh;
-    min-width: 95%;
-    max-width: 100%;
+    width: 97%;
     position: fixed;
     left: 0;
-    top: 0vh;
+    top: 0;
     z-index: 10;
-    background: linear-gradient(145deg, rgb(205, 227, 249) 0%, rgb(232, 239, 243) 55%, rgb(213, 189, 222) 100%) !important;
+    background: linear-gradient(145deg, rgb(205, 227, 249) 0%, rgb(232, 239, 243) 55%, rgb(213, 189, 222) 100%);
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 3%;
     box-shadow: rgba(64, 64, 80, 0.2) 0px 7px 29px 0px;
-    flex-wrap: nowrap;
-    white-space: nowrap;
-    overflow: hidden;
 }
 
+body {
+    padding-top: 10vh; /* Pushes entire content down */
+}
 /* Navbar Logo */
 .navbar h3 {
     color: #2404a2;
     white-space: nowrap;
+    
 }
 
 /* Navbar Options */

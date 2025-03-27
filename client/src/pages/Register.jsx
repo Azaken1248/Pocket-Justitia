@@ -1,22 +1,22 @@
 import React, { useContext, useState } from "react";
 import { GeneralContext } from "../context/GeneralContext";
 import { useNavigate } from "react-router-dom";
-import "../styles/Login.css";
+import "../styles/Register.css";
 
-const Login = () => {
-    const { login, setUsertype, setUsername, setPassword } = useContext(GeneralContext);
+const Register = () => {
+    const { register, setUsertype, setUsername, setEmail, setPassword } = useContext(GeneralContext);
     const [userType, setLocalUserType] = useState("normal");
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setUsertype(userType);
-        login();
+        register();
     };
 
     return (
-        <div className="login-container">
-            <h2 className = "auth-heading">Login</h2>
+        <div className="register-container">
+            <h2 className = "auth-heading">Register</h2>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label>User Type</label>
@@ -44,6 +44,17 @@ const Login = () => {
                 </div>
 
                 <div className="form-group">
+                    <label>Email</label>
+                    <input
+                        type="email"
+                        className="form-control"
+                        placeholder="Enter your email"
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                </div>
+
+                <div className="form-group">
                     <label>Password</label>
                     <input
                         type="password"
@@ -55,14 +66,14 @@ const Login = () => {
                 </div>
 
                 <div className="btn-container">
-                    <button type="submit" className="btn btn-primary">Login</button>
+                    <button type="submit" className="btn btn-primary">Register</button>
                 </div>
 
-                <div className="signup-link">
+                <div className="login-link">
                     <p>
-                        Not Registered?{" "}
-                        <span onClick={() => navigate("/register")} className="hyperlink">
-                            Signup
+                        Already Registered?{" "}
+                        <span onClick={() => navigate("/login")} className="hyperlink">
+                            Login
                         </span>
                     </p>
                 </div>
@@ -71,4 +82,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Register;

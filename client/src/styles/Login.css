@@ -1,48 +1,90 @@
-/* Full Screen Container */
+/* General Container */
 .login-container {
-    background-color: #f8f9fa;
     padding: 20px;
-}
-
-/* Card Style */
-.card {
-    background-color: #ffffff;
-    border-radius: 15px;
-    max-width: 400px;
+    margin: 0 auto;
     width: 100%;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    max-width: 400px;
+    background-color: #fff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-top: 10vh;
+    /* display: flex;
+    flex-direction: column;
+    align-items: center; */
 }
 
-/* Card Shadow */
-.card:hover {
-    transform: scale(1.02);
-    box-shadow: rgba(64, 64, 80, 0.2) 0px 10px 30px 0px;
+/* Form Fields */
+.form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
-/* Button Style */
+    
+/* Center the form heading */
+.auth-heading {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+
+.form-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-control {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+/* Centered Button Container */
+.btn-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Button */
 .btn-primary {
-    background-color: #055791;
-    border-color: #055791;
-    font-weight: 600;
-    transition: background-color 0.2s ease;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 10px;
 }
 
-/* Button Hover Effect */
 .btn-primary:hover {
-    background-color: #004080;
-    border-color: #004080;
+    background-color: #0056b3;
 }
 
 /* Signup Link */
 .signup-link {
-    cursor: pointer;
-    font-weight: 500;
-    text-decoration: underline;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #555;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .card {
-        padding: 15px;
-    }
+/* Hyperlink Style */
+.hyperlink {
+    color: #007bff;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.hyperlink:hover {
+    color: #0056b3;
+    text-decoration: underline;
 }
