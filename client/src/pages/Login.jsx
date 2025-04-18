@@ -90,7 +90,7 @@ const Login = () => {
                 </div>
 
                 <div className="btn-container">
-                    <button type="submit" className="btn btn-primary">Login</button>
+                    <button type="submit" className="btn">Login</button>
                 </div>
 
                 <div className="signup-link">

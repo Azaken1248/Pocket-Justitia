@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import '../styles/Landing.css';
-import logo from '../assets/logo.jpg';
+import logo from '../assets/Icon.svg';
+import lightbulb from '../assets/lightbulb.svg';
+import ministry from '../assets/minestry.svg';
+import law from '../assets/law.svg';
+import constitution from '../assets/constitution.svg'
 
 const lawyerQuotes = {
   inspirational: [
@@ -97,51 +101,73 @@ const Landing = () => {
   };
 
   return (
+    <>
     <div className="landing-container">
       <div className="left-section">
-        <img src={logo} alt="Justicia Logo" className="logo-img" />
-        <h1 className="landing-title">JUSTICIA</h1>
-        <p className="landing-quote">"{quote}"</p>
+      <img src={logo} width={"150px"}></img>
+      <h1 className="landing-title">JUSTICIA</h1>
+      <p className="landing-quote">"{quote}"</p>
 
-        <div className="link-container">
+      <div className="link-container">
+      <div className="top-row">
+        <div onClick={() => window.open("https://lawmin.gov.in/")}>
           <a href="https://lawmin.gov.in/" target="_blank" rel="noopener noreferrer">Ministry of Law</a>
-          <a href="https://www.india.gov.in/topics/law-justice" target="_blank" rel="noopener noreferrer">Law & Justice</a>
-          <a href="https://legislative.gov.in/constitution-of-india/" target="_blank" rel="noopener noreferrer">Download Constitution</a>
+          <img src={ministry} width={"40px"} />
         </div>
+        <div onClick={() => window.open("https://www.india.gov.in/topics/law-justice")}>
+          <a href="https://www.india.gov.in/topics/law-justice" target="_blank" rel="noopener noreferrer">Law & Justice</a>
+          <img src={law} width={"90px"} />
       </div>
+</div>
+
+<div className="bottom-row">
+  <div onClick={() => window.open("https://legislative.gov.in/constitution-of-india/")}>
+    <a href="https://legislative.gov.in/constitution-of-india/" target="_blank" rel="noopener noreferrer">Download Constitution</a>
+    <img src={constitution} width={"60px"} />
+  </div>
+</div>
+      </div>
+
+    </div>
 
       <div className="right-section">
-        <h2>Current Famous Cases</h2>
-        <ul className="cases-list">
-          {recentFamousCases.map((caseItem, index) => (
-            <li key={index} className="case-item" onClick={() => fetchSummary(caseItem.description)}>
-              <div className="case-header">
-                <h4>{caseItem.title}</h4>
-              </div>
+      <h2>Current Famous Cases</h2>
+      <div className="cases-list">
+        {recentFamousCases.map((caseItem, index) => (
+          <div key={index} className="case-item" onClick={() => fetchSummary(caseItem.description)}>
+            <div className="case-header">
+              <h3>{caseItem.title}</h3>
               <p>{caseItem.description}</p>
-              <span className="priority-score">Priority: {calculatePriority(caseItem.title)}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {loading && (
-        <div className="loading-overlay">
-          <div className="spinner"></div>
-          <p>⏳ Generating summary, please wait...</p>
-        </div>
-      )}
-
-      {summary && (
-        <div className="summary-overlay">
-          <div className="summary-content">
-            <h3>Case Summary</h3>
-            <ReactMarkdown>{summary}</ReactMarkdown>
-            <button className="close-button" onClick={() => setSummary(null)}>×</button>
+            </div>
+            <div className='case-content'>
+              <div className='bulb-container'>
+                <img src={lightbulb} width={"60px"} className='bulb-image'></img>
+                <span className='bulb-text'>{calculatePriority(caseItem.title)}</span>
+              </div>
+            </div>
           </div>
-        </div>
-      )}
+        ))}
+      </div>
     </div>
+    </div>
+
+    {loading && (
+      <div className="loading-overlay">
+        <div className="spinner"></div>
+        <p>⏳ Generating summary, please wait...</p>
+      </div>
+    )}
+
+    {summary && (
+      <div className="summary-overlay">
+        <div className="summary-content">
+          <h3>Case Summary</h3>
+          <ReactMarkdown>{summary}</ReactMarkdown>
+          <button className="close-button" onClick={() => setSummary(null)}>×</button>
+        </div>
+      </div>
+    )}
+  </>
   );
 };
 

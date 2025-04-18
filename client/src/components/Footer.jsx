@@ -1,10 +1,12 @@
 import React from "react";
 
 const customStyles = {
-    background: "linear-gradient(145deg, rgb(205, 227, 249) 0%, rgb(232, 239, 243) 55%, rgb(213, 189, 222) 100%)",
-    fontWeight: "600",
-    color: "#055791",
-    minWidth: "100vw",
+    background: "",
+    fontWeight: 600,
+    borderTop: "2px solid", 
+    borderImage: "linear-gradient(90deg, rgba(27, 42, 65, 1) 0%, rgba(255, 255, 255, 1) 25%, rgba(255, 255, 255, 1) 75%, rgba(27, 42, 65, 1) 100%) 1", // Added slice parameter
+    color: "#F5F5F5",
+    width: "100%",
     height: "5vh",
     display: "flex",
     justifyContent: "center",
@@ -12,7 +14,8 @@ const customStyles = {
     position: "fixed",
     bottom: 0,
     left: 0,
-    textAlign: "center"
+    textAlign: "center",
+    boxSizing: "border-box"
 };
 
 function Footer(){

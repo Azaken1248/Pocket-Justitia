@@ -1,15 +1,20 @@
-/* General Container */
+
+
+body{
+  background-color: #1B2A41;
+}
+
 .landing-container {
     display: flex;
     justify-content: space-between;
-    padding: 20px;
+    padding: 10px;
     margin-top: 10vh;
-    background-color: #f8f9fa;
+    background-color: #F5F5F5;
     border-radius: 8px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-    max-width: 1200px;
-    margin: 10vh auto;
-    gap: 20px;
+    transform: scale(0.95);
+    max-width: 1300px;
+    margin: 7vh auto;
+    gap: 50px;
   }
   
   /* Mobile: Stack sections vertically */
@@ -22,10 +27,9 @@
   /* Left Section (Quotes) */
   .left-section {
     flex: 1;
-    background-color: #fff;
+    background-color: #F5F5F5;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -51,7 +55,7 @@
   .landing-title {
     font-size: 2.5rem;
     font-weight: bold;
-    color: #007bff;
+    color: #1B2A41;
     margin-bottom: 20px;
   }
   
@@ -74,35 +78,63 @@
   /* Links */
   .link-container {
     display: flex;
-    justify-content: center;
     flex-direction: column;
-    gap: 10px;
-    margin-top: 15px;
+    align-items: center;
+    gap: 24px;
+    margin-top: 24px;
+    width: 100%;
+    padding: 16px 26px;
+  }
+  
+  .top-row {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
     width: 100%;
   }
   
-  .link-container a {
+  .bottom-row {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .link-container .top-row div,
+  .link-container .bottom-row div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding: 12px;
-    background-color: #007bff;
+    background-color: #7C2C2C;
     color: white;
+    aspect-ratio: 1.618/1;
+    width: 28%;
     text-decoration: none;
     border-radius: 5px;
     transition: background 0.3s;
     font-weight: bold;
     text-align: center;
+    cursor: pointer;
   }
   
-  .link-container a:hover {
-    background-color: #0056b3;
+  .link-container a {
+    color: white;
+    text-decoration: none;
+    margin-bottom: 10px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .top-row div:hover {
+    background-color: #9d3838;
   }
   
   /* Right Section (Cases) */
   .right-section {
     flex: 1;
-    background-color: #fff;
+    background-color: #F5F5F5;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   }
   
   /* Cases Title */
@@ -121,12 +153,23 @@
   
   /* Individual Case */
   .case-item {
+    display: flex;
     margin-bottom: 15px;
     padding: 15px;
     background-color: #f5f5f5;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 3.5px solid #7C2C2C;
     text-align: left;
+  }
+
+  .case-item:hover {
+    background-color: #7C2C2C;
+    color: white; /* sets default text color for direct children */
+  }
+  
+  .case-item:hover h3,
+  .case-item:hover p{
+    color: white;
   }
   
   /* Mobile: Adjust padding */
@@ -137,9 +180,9 @@
   }
   
   /* Case Title */
-  .case-item h4 {
-    font-size: 1.2rem;
-    color: #007bff;
+  .case-item h3 {
+    font-size: 1.5rem;
+    color: #333333;
     margin-bottom: 5px;
   }
   
@@ -147,27 +190,36 @@
   .case-item p {
     font-size: 1rem;
     color: #555;
+    padding-right: 1.5rem;
   }
   
   /* Loading Overlay */
   .loading-overlay {
+    /* Keep existing positioning and background */
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
     background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    
+    /* Update flex properties for better centering */
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    color: white;
-    font-size: 1.2rem;
-    z-index: 1000;
+    gap: 15px; /* Controls space between spinner and text */
   }
   
-  /* Spinner Animation */
+  .loading-overlay p {
+    margin: 0; /* Remove default paragraph margins */
+    font-size: 1.2rem;
+    color: white;
+  }
+  
   .spinner {
+    /* Keep existing spinner styles */
     width: 80px;
     height: 80px;
     border: 8px solid rgba(255, 255, 255, 0.2);
@@ -253,19 +305,55 @@
     color: #c9302c;
   }
   
-  /* Priority Score */
-  .priority-score {
-    background-color: #004080;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 12px;
-    font-size: 0.8rem;
-    margin-left: 10px;
-  }
   
+  
+  
+  .case-header{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
   /* Case Header */
-  .case-header {
+  .case-header h4{
     display: flex;
     justify-content: space-between;
+    color: #333333;
     align-items: center;
   }
+
+  .case-content{
+    display: flex;
+    flex-direction: row;
+    color: #333333;
+  }
+
+  .case-content div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .bulb-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .bulb-image {
+    width: 80px;
+    height: 80px;
+    display: block;
+  }
+  
+  .bulb-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    color: black; /* or white depending on your image */
+    font-size: 18px;
+    pointer-events: none;
+  }
+  
