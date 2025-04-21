@@ -9,7 +9,7 @@ import Landing from '../pages/Landing';
 import Register from "../pages/Register";
 import UserPage from "../pages/UserPage";
 import { GeneralProvider } from "../context/GeneralContext";
-import ProtectedRoute from "./protectedRoute"; // Adjust the path as needed
+import ProtectedRoute from "./protectedRoute";
 
 function App() {
     return (
