@@ -14,7 +14,7 @@ import ProtectedRoute from "./protectedRoute";
 function App() {
     return (
         <div>
-            <BrowserRouter basename="/Pocket-Justitia">
+            <BrowserRouter basename="/">
                 <GeneralProvider>
                     <Navbar />
                     <Routes>
