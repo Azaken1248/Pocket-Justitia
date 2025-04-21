@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Landing.css';
+import { recentFamousCases } from '../context/recentFamousCases';
 import logo from '../assets/Icon.svg';
 import lightbulb from '../assets/lightbulb.svg';
 import ministry from '../assets/minestry.svg';
@@ -22,24 +24,6 @@ const lawyerQuotes = {
   ]
 };
 
-const recentFamousCases = [
-  {
-    title: "Central Vista Project Case (2021)",
-    description: "The Supreme Court upheld the government's decision to redevelop Central Vista in Delhi, citing no procedural lapses."
-  },
-  {
-    title: "Pegasus Spyware Case (2022)",
-    description: "The Supreme Court appointed a committee to investigate the alleged use of Pegasus spyware on Indian citizens."
-  },
-  {
-    title: "Hijab Ban Case (2022)",
-    description: "Karnataka High Court upheld the ban on wearing hijabs in educational institutions, sparking national debate on religious freedom."
-  },
-  {
-    title: "Same-Sex Marriage Case (2023)",
-    description: "Supreme Court heard arguments on the legal recognition of same-sex marriage, reflecting evolving societal values."
-  }
-];
 
 const wordWeights = {
   "ban": 9.0,
@@ -75,13 +59,20 @@ const getRandomQuote = () => {
 };
 
 const Landing = () => {
+  const navigate = useNavigate();
   const [quote, setQuote] = useState("");
   const [summary, setSummary] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [selectedCase, setSelectedCase] = useState(null);
 
   useEffect(() => {
     setQuote(getRandomQuote());
   }, []);
+
+  const handleCaseClick = (caseItem) => {
+    setSelectedCase(caseItem);
+    fetchSummary(caseItem.description);
+  };
 
   const fetchSummary = async (caseDescription) => {
     setLoading(true);
@@ -130,25 +121,29 @@ const Landing = () => {
 
     </div>
 
-      <div className="right-section">
-      <h2>Current Famous Cases</h2>
-      <div className="cases-list">
-        {recentFamousCases.map((caseItem, index) => (
-          <div key={index} className="case-item" onClick={() => fetchSummary(caseItem.description)}>
-            <div className="case-header">
-              <h3>{caseItem.title}</h3>
-              <p>{caseItem.description}</p>
-            </div>
-            <div className='case-content'>
-              <div className='bulb-container'>
-                <img src={lightbulb} width={"60px"} className='bulb-image'></img>
-                <span className='bulb-text'>{calculatePriority(caseItem.title)}</span>
+    <div className="right-section">
+          <h2>Current Famous Cases</h2>
+          <div className="cases-list">
+            {recentFamousCases.map((caseItem, index) => (
+              <div 
+                key={index} 
+                className="case-item" 
+                onClick={() => handleCaseClick(caseItem)}
+              >
+                <div className="case-header">
+                  <h3>{caseItem.title}</h3>
+                  <p>{caseItem.description}</p>
+                </div>
+                <div className='case-content'>
+                  <div className='bulb-container'>
+                    <img src={lightbulb} width={"60px"} className='bulb-image' alt="Priority indicator" />
+                    <span className='bulb-text'>{calculatePriority(caseItem.title)}</span>
+                  </div>
+                </div>
               </div>
-            </div>
+            ))}
           </div>
-        ))}
-      </div>
-    </div>
+        </div>
     </div>
 
     {loading && (
@@ -158,16 +153,22 @@ const Landing = () => {
       </div>
     )}
 
-    {summary && (
-      <div className="summary-overlay">
-        <div className="summary-content">
-          <h3>Case Summary</h3>
-          <ReactMarkdown>{summary}</ReactMarkdown>
-          <button className="close-button" onClick={() => setSummary(null)}>×</button>
+{summary && (
+        <div className="summary-overlay">
+          <div className="summary-content">
+            <h3>Case Summary</h3>
+            <ReactMarkdown>{summary}</ReactMarkdown>
+            <button 
+              className="view-details-btn"
+              onClick={() => navigate(`/cases/${selectedCase.id}`, { state: { caseData: selectedCase } })}
+            >
+              View Full Case Details
+            </button>
+            <button className="close-button" onClick={() => setSummary(null)}>×</button>
+          </div>
         </div>
-      </div>
-    )}
-  </>
+      )}
+    </>
   );
 };
 

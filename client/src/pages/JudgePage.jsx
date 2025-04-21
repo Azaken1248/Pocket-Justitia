@@ -38,6 +38,10 @@ const JudgePage = () => {
     return (
         <div className="judge-page-container">
             <h2 className="page-title">Judge Dashboard</h2>
+            <div className="next-court-date">
+                    <h4>Next Court Date</h4>
+                    <p>{new Date(nextCourtDate).toLocaleDateString()}</p>
+                </div>
 
             <div className="card-container">
                 {/* Current Cases Card */}
@@ -72,12 +76,6 @@ const JudgePage = () => {
                             ))}
                         </ul>
                     ) : <p>No past cases.</p>}
-                </div>
-
-                {/* Next Court Date */}
-                <div className="next-court-date">
-                    <h4>Next Court Date</h4>
-                    <p>{new Date(nextCourtDate).toLocaleDateString()}</p>
                 </div>
             </div>
         </div>

@@ -23,9 +23,12 @@ const Navbar = () => {
                             <p onClick={() => navigate('/login')}>Login</p>
                         </div>
                     </>
-                ) : userType === 'client' ? (
+                ) : userType === 'normal' ? (
                     <>
-                        <h3 className="navbar-logo">JUSTICIA</h3>
+                        <div className='logo-container'>
+                            <img src={logo} width={"60px"}></img>
+                             <a href='/'>JUSTICIA</a>
+                        </div>  
                         <div className="nav-options">
                             <p onClick={() => navigate('/')}>Home</p>
                             <p onClick={() => navigate('/my-cases')}>My Cases</p>
@@ -34,7 +37,10 @@ const Navbar = () => {
                     </>
                 ) : userType === 'lawyer' ? (
                     <>
-                        <h3 className="navbar-logo">JUSTICIA (Lawyer)</h3>
+                        <div className='logo-container'>
+                            <img src={logo} width={"60px"}></img>
+                             <a href='/'>JUSTICIA</a>
+                        </div>  
                         <div className="nav-options">
                             <p onClick={() => navigate('/')}>Home</p>
                             <p onClick={() => navigate('/assigned-cases')}>Assigned Cases</p>
@@ -44,7 +50,10 @@ const Navbar = () => {
                     </>
                 ) : userType === 'judge' ? (
                     <>
-                        <h3 className="navbar-logo">JUSTICIA (Judge)</h3>
+                        <div className='logo-container'>
+                            <img src={logo} width={"60px"}></img>
+                             <a href='/'>JUSTICIA</a>
+                        </div>  
                         <div className="nav-options">
                             <p onClick={() => navigate('/')}>Home</p>
                             <p onClick={() => navigate('/ongoing-cases')}>Ongoing Cases</p>

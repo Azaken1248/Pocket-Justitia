@@ -40,12 +40,20 @@ const Register = () => {
         };
 
         if (userType === 'lawyer') {
+            if (!specialization || !experienceYears || !licenseNumber) {
+                alert('Please fill in all lawyer details.');
+                return;
+            }
             data.lawyerInfo = {
                 specialization,
                 experienceYears: parseInt(experienceYears),
                 licenseNumber
             };
         } else if (userType === 'judge') {
+            if (!courtName || !judgeExperience) {
+                alert('Please fill in all judge details.');
+                return;
+            }
             data.judgeInfo = {
                 courtName,
                 yearsOfExperience: parseInt(judgeExperience)

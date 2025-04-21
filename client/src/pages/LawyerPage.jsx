@@ -4,7 +4,7 @@ import "../styles/UserPage.css";
 
 const LawyerPage = () => {
     const { caseDetails } = useContext(GeneralContext);
-    const [nextCourtDate, setNextCourtDate] = useState("2025-04-15"); // Dummy next court date
+    const [nextCourtDate, _setNextCourtDate] = useState("2025-04-15"); // Dummy next court date
 
     // Dummy Past Cases
     const pastCases = [
@@ -28,9 +28,12 @@ const LawyerPage = () => {
     };
 
     return (
-        <div className="lawyer-page-container">
+        <div className="user-page-container">
             <h2 className="page-title">Lawyer Dashboard</h2>
-
+            <div className="next-court-date">
+                <h4>Next Court Date</h4>
+                <p>{new Date(nextCourtDate).toLocaleDateString()}</p>
+            </div>  
             <div className="card-container">
                 {/* Current Cases Card */}
                 <div className="card">
@@ -94,12 +97,6 @@ const LawyerPage = () => {
                         <p>No available cases to pick.</p>
                     )}
                 </div>
-            </div>
-
-            {/* Next Court Date Section */}
-            <div className="next-court-date">
-                <h4>Next Court Date</h4>
-                <p>{new Date(nextCourtDate).toLocaleDateString()}</p>
             </div>
         </div>
     );

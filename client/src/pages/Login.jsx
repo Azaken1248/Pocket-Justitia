@@ -28,17 +28,25 @@ const Login = () => {
     const login = async () => {
         const data = { username, passwordHash: password };
         const result = await fetchData('/auth/login', 'POST', data);
+    
         if (result && result.token) {
-
             alert('Login Successful!');
-            if(result.user.userType === "normal"){
+            const actualUserType = result.user.userType;
+    
+            // Set only the correct type returned from backend
+            localStorage.setItem("username", username);
+            localStorage.setItem("password", password);
+            localStorage.setItem("userType", actualUserType);
+    
+            if (actualUserType === "normal") {
                 navigate('/user');
-            }else if(result.user.userType === "lawyer"){
+            } else if (actualUserType === "lawyer") {
                 navigate('/lawyer');
-            }else{
+            } else if (actualUserType === "judge") {
                 navigate('/judge');
+            } else {
+                alert("Unknown user role.");
             }
-            
         } else {
             alert('Login Failed: ' + (result?.message || 'Unknown error'));
         }
@@ -53,19 +61,6 @@ const Login = () => {
         <div className="login-container">
             <h2 className="auth-heading">Login</h2>
             <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label>User Type</label>
-                    <select
-                        className="form-control"
-                        value={userType}
-                        onChange={(e) => setLocalUserType(e.target.value)}
-                        required
-                    >
-                        <option value="normal">Normal User</option>
-                        <option value="lawyer">Lawyer</option>
-                        <option value="judge">Judge</option>
-                    </select>
-                </div>
 
                 <div className="form-group">
                     <label>Username</label>

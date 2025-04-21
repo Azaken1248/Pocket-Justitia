@@ -297,12 +297,12 @@ body{
     border: none;
     font-size: 2rem;
     cursor: pointer;
-    color: #d9534f;
+    color: #ffffff;
     transition: color 0.3s ease;
   }
   
   .close-button:hover {
-    color: #c9302c;
+    color: #ffffff;
   }
   
   

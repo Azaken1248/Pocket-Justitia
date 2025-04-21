@@ -1,11 +1,11 @@
 /* Container Styles */
 .case-details-container {
     padding: 20px;
-    max-width: 800px;
+    max-width: 90%;
     margin: 0 auto;
-    background-color: #f9f9f9;
+    margin: 5%;
+    background-color: #f5f5f5;
     border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* Title */
@@ -36,11 +36,10 @@
 .timeline-dot {
     height: 16px;
     width: 16px;
-    background-color: #007bff;
+    background-color: #7C2C2C;
     border-radius: 50%;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
     margin-right: 10px;
-    position: relative;
+    position: relative; 
     top: 10px;
 }
 
@@ -52,13 +51,13 @@
     top: 0;
     height: 100%;
     width: 4px;
-    background-color: #007bff;
+    background-color: #7C2C2C;
     opacity: 0.3;
 }
 
 /* Timeline Card */
 .timeline-content {
-    background-color: #fff;
+    background-color: #F5F5F5;
     padding: 15px;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);

@@ -1,88 +1,81 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import '../styles/CaseDetails.css';
+import { recentFamousCases } from '../context/recentFamousCases';
 
 const CaseDetails = () => {
-    const { caseId } = useParams(); // Fetch the case ID from the URL
+    const { caseId } = useParams();
+    const location = useLocation();
     const [caseData, setCaseData] = useState(null);
 
     useEffect(() => {
-        // Dummy Data for Case Details
-        const dummyCaseData = {
-            caseNumber: "C-2025-001",
-            title: "Property Dispute Case",
-            description: "A legal dispute regarding land ownership.",
-            status: "Ongoing",
-            filedDate: "2025-03-01T10:00:00Z",
-            lastUpdated: "2025-03-25T15:30:00Z",
-            normalUserId: { username: "JohnDoe" },
-            againstUserId: { username: "JaneDoe" },
-            lawyerId: { name: "Amit Sharma" },
-            judgeId: { name: "Neha Verma" },
-            progressTimeline: [
-                {
-                    status: "Filed",
-                    date: "2025-03-01T10:00:00Z",
-                    remarks: "Case was filed by the plaintiff."
-                },
-                {
-                    status: "In Hearing",
-                    date: "2025-03-10T11:00:00Z",
-                    remarks: "First hearing completed, evidence requested."
-                },
-                {
-                    status: "Evidence Submission",
-                    date: "2025-03-15T13:30:00Z",
-                    remarks: "Plaintiff submitted land ownership documents."
-                },
-                {
-                    status: "Judgement",
-                    date: "2025-03-25T15:30:00Z",
-                    remarks: "Final judgement scheduled."
-                }
-            ]
-        };
-
-        // Simulate API call with dummy data
-        setCaseData(dummyCaseData);
-    }, [caseId]);
+        if (location.state?.caseData) {
+            setCaseData(location.state.caseData);
+        } else {
+            const foundCase = recentFamousCases.find(c => c.id === caseId);
+            setCaseData(foundCase || null);
+        }
+    }, [caseId, location.state]);
 
     if (!caseData) {
-        return <p>Loading case details...</p>;
+        return <div className="loading-container">Loading case details...</div>;
     }
+
+    // Helper function to format dates
+    const formatDate = (dateString) => {
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString(undefined, options);
+    };
 
     return (
         <div className="case-details-container">
             <h2 className="case-title">{caseData.title}</h2>
-            <p><strong>Case Number:</strong> {caseData.caseNumber}</p>
-            <p><strong>Description:</strong> {caseData.description}</p>
-            <p><strong>Status:</strong> {caseData.status}</p>
-            <p><strong>Filed Date:</strong> {new Date(caseData.filedDate).toLocaleDateString()}</p>
-            <p><strong>Last Updated:</strong> {new Date(caseData.lastUpdated).toLocaleDateString()}</p>
-            
-            <h3>Involved Parties</h3>
-            <p><strong>Filed By:</strong> {caseData.normalUserId?.username || "N/A"}</p>
-            <p><strong>Against:</strong> {caseData.againstUserId?.username || "N/A"}</p>
-            <p><strong>Lawyer:</strong> {caseData.lawyerId?.name || "Not Assigned"}</p>
-            <p><strong>Judge:</strong> {caseData.judgeId?.name || "Not Assigned"}</p>
-            
-            <h3>Progress Timeline</h3>
-            {caseData.progressTimeline && caseData.progressTimeline.length > 0 ? (
-                <div className="timeline">
-                    {caseData.progressTimeline.map((update, index) => (
-                        <div className="timeline-item" key={index}>
-                            <div className="timeline-dot"></div>
-                            <div className="timeline-content">
-                                <p><strong>Status:</strong> {update.status}</p>
-                                <p><strong>Date:</strong> {new Date(update.date).toLocaleDateString()}</p>
-                                <p><strong>Remarks:</strong> {update.remarks || "No remarks"}</p>
-                            </div>
-                        </div>
-                    ))}
+            <div className="case-meta">
+                <p><strong>Case Number:</strong> {caseData.caseNumber}</p>
+                <p><strong>Status:</strong> <span className={`status-${caseData.status.toLowerCase()}`}>{caseData.status}</span></p>
+                <p><strong>Filed Date:</strong> {formatDate(caseData.filedDate)}</p>
+                <p><strong>Last Updated:</strong> {formatDate(caseData.lastUpdated)}</p>
+            </div>
+
+            <div className="case-description">
+                <h3>Case Description</h3>
+                <p>{caseData.description}</p>
+            </div>
+
+            <div className="involved-parties">
+                <h3>Involved Parties</h3>
+                <div className="parties-grid">
+                    <div>
+                        <p className="party-label">Petitioner</p>
+                        <p className="party-name">{caseData.parties?.petitioner || "N/A"}</p>
+                    </div>
+                    <div>
+                        <p className="party-label">Respondent</p>
+                        <p className="party-name">{caseData.parties?.respondent || "N/A"}</p>
+                    </div>
                 </div>
-            ) : (
-                <p>No updates available.</p>
-            )}
+            </div>
+
+            <div className="case-timeline">
+                <h3>Case Timeline</h3>
+                {console.log(caseData)}
+                {caseData.progressTimeline?.length > 0 ? (
+                    <div className="timeline">
+                        {caseData.progressTimeline.map((update, index) => (
+                            <div className="timeline-item" key={index}>
+                                <div className="timeline-dot"></div>
+                                <div className="timeline-content">
+                                    <p className="timeline-status">{update.status}</p>
+                                    <p className="timeline-date">{formatDate(update.date)}</p>
+                                    <p className="timeline-remarks">{update.remarks}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <p className="no-timeline">No timeline updates available</p>
+                )}
+            </div>
         </div>
     );
 };

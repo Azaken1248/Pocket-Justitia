@@ -3,8 +3,8 @@ import { GeneralContext } from "../context/GeneralContext";
 import "../styles/UserPage.css";
 
 const UserPage = () => {
-    const { caseDetails, addCase, setCaseDetails } = useContext(GeneralContext);
-    const [nextCourtDate, setNextCourtDate] = useState("2025-04-15"); // Dummy next court date
+    const { caseDetails, addCase } = useContext(GeneralContext);
+    const [nextCourtDate] = useState("2025-04-15"); // Static next court date
 
     const [newCase, setNewCase] = useState({
         caseNumber: "",
@@ -50,43 +50,39 @@ const UserPage = () => {
         }
     ];
 
-    // Handle Form Change
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setNewCase({ ...newCase, [name]: value });
+        setNewCase(prev => ({ ...prev, [name]: value }));
     };
 
-    // Handle Form Submit
     const handleSubmit = (e) => {
         e.preventDefault();
         if (newCase.caseNumber && newCase.title && newCase.description) {
             addCase({ ...newCase });
             alert("Case added successfully!");
-            setNewCase({ // Reset form
+            setNewCase({
+                ...newCase,
                 caseNumber: "",
                 title: "",
                 description: "",
-                status: "Ongoing",
-                filedDate: "",
-                lastUpdated: new Date().toISOString().split('T')[0],
-                normalUserId: "12345",
-                againstUserId: "54321",
-                lawyerId: "67890",
-                judgeId: "98765",
-                progressTimeline: []
+                filedDate: ""
             });
         } else {
             alert("Please fill in all fields!");
         }
     };
 
-    // Filter Cases
     const currentCases = caseDetails.filter(caseItem => caseItem.status !== "Closed");
     const pastCases = [...caseDetails.filter(caseItem => caseItem.status === "Closed"), ...dummyPastCases];
 
     return (
         <div className="user-page-container">
             <h2 className="page-title">User Dashboard</h2>
+            
+            <div className="next-court-date">
+                <h4>Next Court Date</h4>
+                <p>{new Date(nextCourtDate).toLocaleDateString()}</p>
+            </div>
 
             <div className="card-container">
                 {/* Add Case Card */}
@@ -177,12 +173,6 @@ const UserPage = () => {
                         Contact Now
                     </button>
                 </div>
-            </div>
-
-            {/* Next Court Date */}
-            <div className="next-court-date">
-                <h4>Next Court Date</h4>
-                <p>{new Date(nextCourtDate).toLocaleDateString()}</p>
             </div>
         </div>
     );
