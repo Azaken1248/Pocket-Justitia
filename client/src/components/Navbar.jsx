@@ -18,7 +18,7 @@ const Navbar = () => {
                             <img src={logo} width={"60px"}></img>
                              <a href='/'>JUSTICIA</a>
                         </div>  
-                        <div className="nav-opti    ons">
+                        <div className="nav-options">
                             <p onClick={() => navigate('/')}>Home</p>
                             <p onClick={() => navigate('/login')}>Login</p>
                         </div>
