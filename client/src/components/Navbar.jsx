@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import logo from '../assets/icon.svg';
+import logo from '../assets/Icon.svg';
 import { GeneralContext } from '../context/GeneralContext';
 import '../styles/Navbar.css';
 
@@ -18,7 +18,7 @@ const Navbar = () => {
                             <img src={logo} width={"60px"}></img>
                              <a href='/'>JUSTICIA</a>
                         </div>  
-                        <div className="nav-options">
+                        <div className="nav-opti    ons">
                             <p onClick={() => navigate('/')}>Home</p>
                             <p onClick={() => navigate('/login')}>Login</p>
                         </div>
