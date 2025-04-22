@@ -77,7 +77,7 @@ const Landing = () => {
   const fetchSummary = async (caseDescription) => {
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:3000/gemini/generate-summary', {
+      const response = await fetch('https://api.justicia.azaken.com/gemini/generate-summary', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ caseDescription })

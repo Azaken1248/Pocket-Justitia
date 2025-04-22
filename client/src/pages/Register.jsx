@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Register.css";
 
-const apiUrl = 'http://localhost:3000';
+const apiUrl = 'https://api.justicia.azaken.com/';
 
 const Register = () => {
     const [userType, setLocalUserType] = useState("normal");

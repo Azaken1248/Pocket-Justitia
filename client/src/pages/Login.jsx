@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Login.css";
 
-const apiUrl = 'http://localhost:3000';
+const apiUrl = 'https://api.justicia.azaken.com/';
 
 const Login = () => {
     const [userType, setLocalUserType] = useState("normal");
